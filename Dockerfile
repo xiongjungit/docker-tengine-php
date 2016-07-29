@@ -38,7 +38,6 @@ RUN apt-get -y install vim \
 	php5-xsl \
 	php5-ldap \
 	libc-client-dev \
- 	gcc \
 	libmcrypt-dev \
 	libssl-dev \
 	libpcre3 \
@@ -65,8 +64,8 @@ RUN apt-get -y install vim \
 	libxslt1-dev \
 	libpcre++0 \
 	libpcre++-dev \
-	libperl-dev
-
+	libperl-dev \
+        gcc
 
 RUN ln -s /usr/bin/make /usr/bin/gmake
 
@@ -177,6 +176,11 @@ RUN apt-get install -y supervisor
 
 # clear aptlist & home/files
 RUN apt-get clean all && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /home/*
+
+RUN apt-get autoremove -y
+
+RUN php5enmod mcrypt imap  
+
 
 ADD configs /configs
 
