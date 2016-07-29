@@ -6,7 +6,8 @@ ADD sources.list /etc/apt/sources.list
 RUN apt-get update
 
 ENV NGINX_VERSION tengine-2.1.2
-
+ENV DEBIAN_FRONTEND noninteractive
+ENV TERM xterm
 
 # install some convenience tools
 RUN apt-get install -y vim unzip wget curl rsync mysql-client
@@ -46,6 +47,20 @@ RUN apt-get -y install gcc \
                        libpcre++-dev \
                        libperl-dev
 RUN ln -s /usr/bin/make /usr/bin/gmake
+
+# config workdir
+WORKDIR /home
+
+# INSTALL LUAJIT
+RUN wget http://luajit.org/download/LuaJIT-2.0.4.tar.gz
+RUN tar zxvf LuaJIT-2.0.4.tar.gz
+RUN cd LuaJIT-2.0.4 && make && make install
+
+# set env
+ENV LUAJIT_LIB=/usr/local/lib
+ENV LUAJIT_INC=/usr/local/include/luajit-2.0
+ENV LD_LIBRARY_PATH=/usr/local/lib/:/opt/drizzle/lib/:$LD_LIBRARY_PATH
+
 
 # INSTALL tengine
 WORKDIR /usr/src/
