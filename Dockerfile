@@ -63,10 +63,8 @@ ENV LD_LIBRARY_PATH=/usr/local/lib/:/opt/drizzle/lib/:$LD_LIBRARY_PATH
 
 
 # INSTALL tengine
-WORKDIR /usr/src/
+WORKDIR /root
 ADD https://github.com/alibaba/tengine/archive/${NGINX_VERSION}.tar.gz tengine.tar.gz
-
-RUN mkdir /opt/nginx
 
 RUN tar -zxvf tengine.tar.gz && \
     cd tengine-${NGINX_VERSION} && \
@@ -74,7 +72,6 @@ RUN tar -zxvf tengine.tar.gz && \
         --enable-mods-static=all \
         --user=www-data \
         --group=www-data \
-        --prefix=/opt/nginx \
         --conf-path=/etc/nginx/nginx.conf \
         --lock-path=/var/lock/nginx.lock \
         --pid-path=/run/nginx.pid \
@@ -128,7 +125,6 @@ RUN tar -zxvf tengine.tar.gz && \
 RUN mkdir /var/cache/nginx && \
     mkdir /var/ngx_pagespeed_cache && \
     mkdir /var/log/pagespeed && \
-    mkdir /var/log/nginx && \
     mkdir -p /etc/nginx/conf.d && \
     mkdir -p /etc/nginx/sites-available && \
     mkdir -p /etc/nginx/sites-enabled && \
