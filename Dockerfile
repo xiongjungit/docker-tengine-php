@@ -2,14 +2,15 @@ FROM       daocloud.io/library/ubuntu:14.04
 MAINTAINER xiongjun,dockerxman <fenyunxx@163.com>
 
 ADD sources.list /etc/apt/sources.list
-
+RUN add-apt-repository ppa:chris-lea/node.js
 RUN apt-get update
 
 ENV NGINX_VERSION tengine-2.1.2
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM xterm
 
-RUN apt-get -y install vim \
+RUN apt-get -y install nodejs
+	vim \
 	unzip \
 	wget \
 	curl \
@@ -65,7 +66,8 @@ RUN apt-get -y install vim \
 	libpcre++0 \
 	libpcre++-dev \
 	libperl-dev \
-        gcc
+        gcc \
+        git
 
 RUN ln -s /usr/bin/make /usr/bin/gmake
 
@@ -193,12 +195,23 @@ RUN cp /configs/php5/imap.ini /etc/php5/mods-available/imap.ini
 
 RUN php5enmod mcrypt imap 
 
+
+RUN wget https://npmjs.org/install.sh --no-check-certificate
+RUN chmod 777 install.sh
+RUN sh install.sh
+
 RUN mkdir /var/www
 
 # install a site
 ADD configs/www /var/www
 
 RUN chown -R www-data:www-data /var/www
+
+RUN curl -sS https://getcomposer.org/installer | php
+
+RUN /usr/bin/php composer.phar --version
+
+RUN mv composer.phar /usr/local/bin/composer
 
 EXPOSE 22 80 443
 
