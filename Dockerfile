@@ -19,7 +19,7 @@ RUN apt-get -y install vim \
 	php5-dev \
 	php5-fpm \
 	php5-mysql \
-	php5-pgsql
+	php5-pgsql \
 	php5-curl \
 	php5-mcrypt \
 	php5-gd \
