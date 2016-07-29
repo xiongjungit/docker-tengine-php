@@ -156,7 +156,6 @@ RUN apt-get clean all && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /home/*
 ADD configs /configs
 
 RUN ln -sf /configs/nginx/nginx.conf /etc/nginx/nginx.conf
-RUN ln -sf /configs/nginx/sites-available/default /etc/nginx/sites-available/default
 
 RUN ln -sf /configs/supervisor/supervisord.conf /etc/supervisor/
 RUN ln -sf /configs/supervisor/conf.d/apps.conf /etc/supervisor/conf.d/apps.conf

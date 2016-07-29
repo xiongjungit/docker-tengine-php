@@ -33,7 +33,7 @@ set laststatus=2                " 启动显示状态行(1),总是显示状态行
 
 set noexpandtab                 " 不要用空格代替制表符
 set history=1000                " 历史记录数
-set mouse=a                     " 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
+" set mouse=a                     " 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
 set selection=exclusive
 set selectmode=mouse,key
 set report=0                    " 通过使用: commands命令，告诉我们文件的哪一行被改变过
