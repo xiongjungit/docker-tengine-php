@@ -9,43 +9,65 @@ ENV NGINX_VERSION tengine-2.1.2
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM xterm
 
-# install some convenience tools
-RUN apt-get install -y vim unzip wget curl rsync mysql-client
+RUN apt-get -y install vim \
+	unzip \
+	wget \
+	curl \
+	rsync \
+	mysql-clinet \
+	php5 \
+	php5-dev \
+	php5-fpm \
+	php5-mysql \
+	php5-pgsql
+	php5-curl \
+	php5-mcrypt \
+	php5-gd \
+	php5-intl \
+	php5-pear \
+	php5-imagick \
+	php5-imap \
+	php5-memcache \
+	php5-ming \
+	php5-ps \
+	php5-pshell \
+	php5-recode \
+	php5-sqlite \
+	php5-tidy \
+	php5-xmlrpc \
+	php5-xsl \
+	php5-ldap \
+	libc-client-dev \
+ 	gcc \
+	libmcrypt-dev \
+	libssl-dev \
+	libpcre3 \
+	libpcre3-dev \
+	zlib1g-dev \
+	libgeoip-dev \
+	libxslt1-dev \
+	libgd2-dev \
+	build-essential \
+	libc6 \
+	libexpat1 \
+	libgd2-xpm-dev \
+	libgeoip1 \
+	libgeoip-dev \
+	libpam0g \
+	libssl1.0.0 \
+	libxml2 \
+	libxslt1.1 \
+	zlib1g \
+	openssl \
+	libssl-dev \
+	libgd2-xpm-dev \
+	libgeoip-dev \
+	libxslt1-dev \
+	libpcre++0 \
+	libpcre++-dev \
+	libperl-dev
 
-# Set Vim Config
-ADD vimrc /etc/vim/vimrc
 
-# install and configure php-fpm
-RUN apt-get install -y php5-fpm php5-mysql php5-curl php5-mcrypt php5-gd php5-intl php-pear php5-imagick php5-imap php5-memcache php5-ming php5-ps php5-pspell php5-recode php5-sqlite php5-tidy php5-xmlrpc php5-xsl 
-
-
-RUN apt-get -y install gcc \
-                       libssl-dev \
-		       libpcre3 \
-                       libpcre3-dev \
-                       zlib1g-dev \
-                       libgeoip-dev \
-                       libxslt1-dev \
-                       libgd2-dev \
-                       build-essential \
-                       libc6 \
-                       libexpat1 \
-                       libgd2-xpm-dev \
-                       libgeoip1 \
-                       libgeoip-dev \
-                       libpam0g \
-                       libssl1.0.0 \
-                       libxml2 \
-                       libxslt1.1 \
-                       zlib1g \
-                       openssl \
-		       libssl-dev \
-                       libgd2-xpm-dev \
-                       libgeoip-dev \
-                       libxslt1-dev \
-                       libpcre++0 \
-                       libpcre++-dev \
-                       libperl-dev
 RUN ln -s /usr/bin/make /usr/bin/gmake
 
 # config workdir
@@ -162,6 +184,8 @@ RUN ln -sf /configs/supervisor/conf.d/apps.conf /etc/supervisor/conf.d/apps.conf
 RUN ln -sf /configs/php5/php.ini /etc/php5/fpm/php.ini
 RUN ln -sf /configs/php5/php-fpm.conf /etc/php5/fpm/php-fpm.conf
 RUN ln -sf /configs/php5/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf
+
+RUN cp /configs/php5/imap.ini /etc/php5/mods-available/imap.ini
 
 RUN mkdir /var/www
 
