@@ -24,13 +24,13 @@ RUN apt-get -y install vim \
 	php5-mcrypt \
 	php5-gd \
 	php5-intl \
-	php5-pear \
+	php-pear \
 	php5-imagick \
 	php5-imap \
 	php5-memcache \
 	php5-ming \
 	php5-ps \
-	php5-pshell \
+	php5-pspell \
 	php5-recode \
 	php5-sqlite \
 	php5-tidy \
