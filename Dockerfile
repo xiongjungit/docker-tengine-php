@@ -70,6 +70,9 @@ RUN apt-get -y install vim \
 
 RUN ln -s /usr/bin/make /usr/bin/gmake
 
+# Set Vim Config
+ADD vimrc /etc/vim/vimrc
+
 # config workdir
 WORKDIR /home
 
