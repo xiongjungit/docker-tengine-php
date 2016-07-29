@@ -179,9 +179,6 @@ RUN apt-get clean all && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /home/*
 
 RUN apt-get autoremove -y
 
-RUN php5enmod mcrypt imap  
-
-
 ADD configs /configs
 
 RUN ln -sf /configs/nginx/nginx.conf /etc/nginx/nginx.conf
@@ -193,6 +190,8 @@ RUN ln -sf /configs/php5/php-fpm.conf /etc/php5/fpm/php-fpm.conf
 RUN ln -sf /configs/php5/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf
 
 RUN cp /configs/php5/imap.ini /etc/php5/mods-available/imap.ini
+
+RUN php5enmod mcrypt imap 
 
 RUN mkdir /var/www
 
