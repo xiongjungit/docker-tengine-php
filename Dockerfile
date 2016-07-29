@@ -14,7 +14,7 @@ RUN apt-get -y install vim \
 	wget \
 	curl \
 	rsync \
-	mysql-clinet \
+	mysql-client \
 	php5 \
 	php5-dev \
 	php5-fpm \
@@ -90,7 +90,7 @@ ADD https://github.com/alibaba/tengine/archive/${NGINX_VERSION}.tar.gz tengine.t
 
 RUN tar -zxvf tengine.tar.gz && \
     cd tengine-${NGINX_VERSION} && \
-    ./configure \
+        ./configure \
         --enable-mods-static=all \
         --user=www-data \
         --group=www-data \
