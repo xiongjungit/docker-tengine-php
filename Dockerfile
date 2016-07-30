@@ -218,7 +218,7 @@ RUN mkdir /var/www
 # install a site
 ADD configs/www /var/www
 
-RUN cd /var/www
+WORKDIR /var/www
 
 RUN wget https://github.com/qq215672398/StuGradeWithLaravel5/archive/master.zip
 
@@ -234,13 +234,11 @@ RUN /usr/bin/php composer.phar --version
 
 RUN mv composer.phar /usr/local/bin/composer
 
-RUN cd /var/www/laraverl5
-
 ADD .env.example /var/www/laraver5/.env.example
 
-RUN sed -i 's/http:\/\/localhost\/StuGradeWithLaravel5\/public/http:\/\/172.17.0.3\/laravel5\/public/g' config/app.php 
+RUN sed -e 's/http:\/\/localhost\/StuGradeWithLaravel5\/public/http:\/\/172.17.0.3\/laravel5\/public/g' /var/www/laravel5/config/app.php 
 
-RUN composer update
+RUN cd /var/www/laravel5&&composer update
 
 RUN npm install
 
