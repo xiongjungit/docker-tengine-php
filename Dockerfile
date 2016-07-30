@@ -2,14 +2,13 @@ FROM       daocloud.io/library/ubuntu:14.04
 MAINTAINER xiongjun,dockerxman <fenyunxx@163.com>
 
 ADD sources.list /etc/apt/sources.list
-RUN add-apt-repository ppa:chris-lea/node.js
 RUN apt-get update
 
 ENV NGINX_VERSION tengine-2.1.2
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM xterm
 
-RUN apt-get -y install nodejs
+RUN apt-get -y install \
 	vim \
 	unzip \
 	wget \
@@ -67,6 +66,8 @@ RUN apt-get -y install nodejs
 	libpcre++-dev \
 	libperl-dev \
         gcc \
+	g++ \
+	make \
         git
 
 RUN ln -s /usr/bin/make /usr/bin/gmake
@@ -195,10 +196,16 @@ RUN cp /configs/php5/imap.ini /etc/php5/mods-available/imap.ini
 
 RUN php5enmod mcrypt imap 
 
+RUN wget https://nodejs.org/download/release/latest/node-v6.3.1-linux-x64.tar.gz
+RUN tar zxvf node-v6.3.1-linux-x64.tar.gz 
+RUN cd node-v6.3.1-linux-x64
+RUN ./configure --with-intl=none
+RUN make&&make install
 
-RUN wget https://npmjs.org/install.sh --no-check-certificate
-RUN chmod 777 install.sh
-RUN sh install.sh
+RUN  npm config set registry https://registry.npm.taobao.org && \
+  npm install -g npm && \
+  printf '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /root/.bashrc
+
 
 RUN mkdir /var/www
 
@@ -213,7 +220,17 @@ RUN /usr/bin/php composer.phar --version
 
 RUN mv composer.phar /usr/local/bin/composer
 
-EXPOSE 22 80 443
+RUN cd /var/www/laravel
+
+RUN composer update
+
+RUN npm install
+
+RUN composer dump-autoload
+
+RUN php artisan serve &
+
+EXPOSE 22 80 443 8000
 
 ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
 
