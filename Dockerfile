@@ -8,7 +8,7 @@ ENV NGINX_VERSION tengine-2.1.2
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM xterm
 
-RUN apt-get -y install \
+RUN apt-get -y install build-essential \
 	gcc \
 	g++ \
 	make 
