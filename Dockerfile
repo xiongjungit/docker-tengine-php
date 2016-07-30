@@ -196,13 +196,18 @@ RUN cp /configs/php5/imap.ini /etc/php5/mods-available/imap.ini
 
 RUN php5enmod mcrypt imap 
 
-RUN wget https://nodejs.org/download/release/latest/node-v6.3.1-linux-x64.tar.gz
-RUN tar zxvf node-v6.3.1-linux-x64.tar.gz 
-RUN cd node-v6.3.1-linux-x64
-RUN ./configure --with-intl=none
-RUN make&&make install
-
-RUN  npm config set registry https://registry.npm.taobao.org && \
+RUN \
+  cd /tmp && \
+  wget http://npm.taobao.org/mirrors/node/latest/node-v6.3.1.tar.gz && \
+  tar xvzf node-v6.3.1.tar.gz && \
+  rm -f node-v6.3.1.tar.gz && \
+  cd node-v* && \
+  ./configure && \
+  CXX="g++ -Wno-unused-local-typedefs" make && \
+  CXX="g++ -Wno-unused-local-typedefs" make install && \
+  cd /tmp && \
+  rm -rf /tmp/node-v* && \
+  npm config set registry https://registry.npm.taobao.org && \
   npm install -g npm && \
   printf '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /root/.bashrc
 
