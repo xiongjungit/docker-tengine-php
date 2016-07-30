@@ -9,6 +9,11 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV TERM xterm
 
 RUN apt-get -y install \
+	gcc \
+	g++ \
+	make 
+
+RUN apt-get -y install \
 	vim \
 	unzip \
 	wget \
@@ -65,10 +70,7 @@ RUN apt-get -y install \
 	libpcre++0 \
 	libpcre++-dev \
 	libperl-dev \
-        gcc \
-	g++ \
-	make \
-        git
+        git-core
 
 RUN ln -s /usr/bin/make /usr/bin/gmake
 
