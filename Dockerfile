@@ -1,22 +1,36 @@
 FROM       daocloud.io/library/ubuntu:14.04
 MAINTAINER xiongjun,dockerxman <fenyunxx@163.com>
 
-ADD sources.list /etc/apt/sources.list
-RUN apt-get update
-
 ENV NGINX_VERSION tengine-2.1.2
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM xterm
 
-RUN apt-get -y install build-essential \
-	gcc \
-	g++ \
-	make 
+ADD sources.list /etc/apt/sources.list
+RUN apt-get update
+
+RUN apt-get -y install wget gcc g++ make build-essential python
+
+
+RUN \
+  cd /tmp && \
+  wget http://npm.taobao.org/mirrors/node/latest/node-v6.3.1.tar.gz && \
+  tar xvzf node-v6.3.1.tar.gz && \
+  rm -f node-v6.3.1.tar.gz && \
+  cd node-v* && \
+  ./configure && \
+  CXX="g++ -Wno-unused-local-typedefs" make && \
+  CXX="g++ -Wno-unused-local-typedefs" make install && \
+  cd /tmp && \
+  rm -rf /tmp/node-v* && \
+  npm config set registry https://registry.npm.taobao.org && \
+  npm install -g npm && \
+  printf '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /root/.bashrc
+
+
 
 RUN apt-get -y install \
 	vim \
 	unzip \
-	wget \
 	curl \
 	rsync \
 	mysql-client \
@@ -197,21 +211,6 @@ RUN ln -sf /configs/php5/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf
 RUN cp /configs/php5/imap.ini /etc/php5/mods-available/imap.ini
 
 RUN php5enmod mcrypt imap 
-
-RUN \
-  cd /tmp && \
-  wget http://npm.taobao.org/mirrors/node/latest/node-v6.3.1.tar.gz && \
-  tar xvzf node-v6.3.1.tar.gz && \
-  rm -f node-v6.3.1.tar.gz && \
-  cd node-v* && \
-  ./configure && \
-  CXX="g++ -Wno-unused-local-typedefs" make && \
-  CXX="g++ -Wno-unused-local-typedefs" make install && \
-  cd /tmp && \
-  rm -rf /tmp/node-v* && \
-  npm config set registry https://registry.npm.taobao.org && \
-  npm install -g npm && \
-  printf '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /root/.bashrc
 
 
 RUN mkdir /var/www
