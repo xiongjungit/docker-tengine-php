@@ -234,7 +234,7 @@ RUN /usr/bin/php composer.phar --version
 
 RUN mv composer.phar /usr/local/bin/composer
 
-ADD .env.example /var/www/laraver5/.env.example
+ADD .env.example /var/www/laravel5/.env.example
 
 RUN sed -e 's/http:\/\/localhost\/StuGradeWithLaravel5\/public/http:\/\/172.17.0.3\/laravel5\/public/g' /var/www/laravel5/config/app.php 
 
