@@ -242,9 +242,9 @@ RUN cd /var/www/laravel5&&composer update
 
 RUN npm install
 
-RUN composer dump-autoload
+RUN cd /var/www/laravel5&&composer dump-autoload
 
-RUN php artisan serve &
+RUN cd /var/www/laravel5&&php artisan serve &
 
 EXPOSE 22 80 443 8000
 
