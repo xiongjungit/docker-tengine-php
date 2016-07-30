@@ -218,6 +218,14 @@ RUN mkdir /var/www
 # install a site
 ADD configs/www /var/www
 
+RUN cd /var/www
+
+RUN wget https://github.com/qq215672398/StuGradeWithLaravel5/archive/master.zip
+
+RUN unzip master.zip&&rm -f master.zip
+
+RUN mv StuGradeWithLaravel5-master laravel5
+
 RUN chown -R www-data:www-data /var/www
 
 RUN curl -sS https://getcomposer.org/installer | php
@@ -226,7 +234,11 @@ RUN /usr/bin/php composer.phar --version
 
 RUN mv composer.phar /usr/local/bin/composer
 
-RUN cd /var/www/laravel
+RUN cd /var/www/laraverl5
+
+ADD .env.example /var/www/laraver5/.env.example
+
+RUN sed -i 's/http:\/\/localhost\/StuGradeWithLaravel5\/public/http:\/\/172.17.0.3\/laravel5\/public/g' config/app.php 
 
 RUN composer update
 
