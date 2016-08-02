@@ -1,5 +1,4 @@
-
-<span style="font-family:Microsoft Yahei,Helvetica Neue,Helvetica,Arial,sans-serif; color:#222222">#! /bin/sh
+#! /bin/sh
 ### BEGIN INIT INFO
 # Provides:          supervisord
 # Required-Start:    $remote_fs
@@ -151,5 +150,3 @@ case "$1" in
 	exit 3
 	;;
 esac
- 
-:</span>
